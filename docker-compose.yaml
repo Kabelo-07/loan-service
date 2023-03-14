@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  loan-service:
+    container_name: loan-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: loan-service:latest
+    ports:
+      - '8080:8080'
+    networks:
+      - loan-network
+
+networks:
+  loan-network:
+    driver: bridge

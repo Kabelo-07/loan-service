@@ -1,0 +1,280 @@
+{
+	"info": {
+		"_postman_id": "c8da92a5-1026-481f-beb6-adddb2238a2e",
+		"name": "loan-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4567108"
+	},
+	"item": [
+		{
+			"name": "loan-offers",
+			"item": [
+				{
+					"name": "{product-id}",
+					"item": [
+						{
+							"name": "Accept a loan offer",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customer_id\": \"urn:uuid:1c04386e-0ebe-cfce-5ef2-069755038cbb\",\n  \"payment_method\": \"AUTO_DEDUCTION\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/loan-offers/:product-id/accept",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"loan-offers",
+										":product-id",
+										"accept"
+									],
+									"variable": [
+										{
+											"key": "product-id",
+											"value": "urn:uuid:f1ae8e5c-315b-0381-d522-a0d2d29b6697",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"customer_id\": \"urn:uuid:1c04386e-0ebe-cfce-5ef2-069755038cbb\",\n  \"payment_method\": \"AUTO_DEDUCTION\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/loan-offers/:product-id/accept",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"loan-offers",
+												":product-id",
+												"accept"
+											],
+											"variable": [
+												{
+													"key": "product-id",
+													"value": "urn:uuid:f1ae8e5c-315b-0381-d522-a0d2d29b6697",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"50a007a8-6884-7ccc-bffb-5a5c1b5c1d5a\",\n  \"principal_amount\": 94.60225123198242,\n  \"repayment_amount\": 32.936621966898684,\n  \"customer_id\": \"urn:uuid:e3bd3872-5244-8943-4572-368fc36f583b\",\n  \"product_id\": \"a76d038c-fac5-a1e3-6614-c7784706a5c1\",\n  \"due_date\": \"2017-02-21T02:11:11.807Z\",\n  \"payment_method\": \"AUTO_DEDUCTION\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Decline a loan offer",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/loan-offers/:product-id/decline",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"loan-offers",
+										":product-id",
+										"decline"
+									],
+									"variable": [
+										{
+											"key": "product-id",
+											"value": "urn:uuid:f1ae8e5c-315b-0381-d522-a0d2d29b6697",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Processed",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/loan-offers/:product-id/decline",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"loan-offers",
+												":product-id",
+												"decline"
+											],
+											"variable": [
+												{
+													"key": "product-id",
+													"value": "urn:uuid:f1ae8e5c-315b-0381-d522-a0d2d29b6697",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "List the loan offers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/loan-offers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"loan-offers"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "The list of loan offers",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/loan-offers",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"loan-offers"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "List of customers",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/customers",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "The list of customers",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/customers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{}"
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8081/api",
+			"type": "string"
+		}
+	]
+}

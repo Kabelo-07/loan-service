@@ -1,0 +1,213 @@
+openapi: '3.0.1'
+info:
+  title: 'loan-service'
+  version: 0.0.1
+servers:
+  - url: http://localhost:8081/api
+    description: Development server
+  - url: https://localhost:8081/api
+    description: Development server with TLS Profile
+paths:
+  /customers:
+    get:
+      operationId: listCustomers
+      tags:
+        - Customers
+      summary: List of customers
+      responses:
+        200:
+          description: The list of customers
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CustomerDTO'
+
+  /loan-offers:
+    get:
+      operationId: listLoanOffers
+      tags:
+        - Loan Products
+      summary: List the loan offers
+      responses:
+        200:
+          description: The list of loan offers
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProductDTO'
+  /loan-offers/{product-id}/accept:
+    post:
+      operationId: acceptLoanOffer
+      tags:
+        - Loan Products
+      summary: Accept a loan offer
+      parameters:
+        - in: path
+          name: product-id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoanOfferRequestDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanAccountDTO'
+
+  /loan-offers/{product-id}/decline:
+    post:
+      operationId: declineLoanOffer
+      tags:
+        - Loan Products
+      summary: Decline a loan offer
+      parameters:
+        - in: path
+          name: product-id
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        204:
+          description: Processed
+
+components:
+  schemas:
+
+    ProductDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Product unique identifier assigned when a product is added
+        name:
+          type: string
+          description: Product name
+        amount:
+          type: number
+          minimum: 1
+          maximum: 100
+          description: Product amount
+        interest_percentage:
+          type: number
+          minimum: 1
+          maximum: 100
+          description: Product interest percentage to be earned
+        tenure:
+          type: integer
+          format: int32
+          minimum: 1
+          description: Duration of the Loan Product in days
+
+    LoanOfferRequestDTO:
+      type: object
+      required:
+        - customer_id
+        - payment_method
+      properties:
+        customer_id:
+          type: string
+          format: uuid
+          description: Unique customer identifier
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethodDTO'
+          description: Payment method
+          example: AUTO_DEDUCTION, BANK_TRANSFER
+
+    LoanAccountDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Loan Account unique identifier
+        principal_amount:
+          type: number
+          minimum: 1
+          maximum: 100
+          description: Loan Account principal amount credited into customer account
+        repayment_amount:
+          type: number
+          minimum: 1
+          maximum: 100
+          description: Loan Account repayment amount inclusive of the interest percentage
+        customer_id:
+          type: string
+          format: uuid
+          description: Customer Id to identify customer associated to this Loan Account
+        product_id:
+          type: string
+          format: uuid
+          description: Product Id to identify product associated to this Loan Account
+        due_date:
+          type: string
+          format: date-time
+          description: The loan due date
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethodDTO'
+          description: The loan account's specified payment method
+
+    CustomerDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Customer unique identifier
+        first_name:
+          type: string
+          description: Customer first name
+        last_name:
+          type: string
+          description: Customer last name
+        email_address:
+          type: string
+          description: Customer email address
+        phone_number:
+          type: string
+          description: Customer phone number
+        communication_method:
+          $ref: '#/components/schemas/CommunicationMethodDTO'
+          description: Customer preferred communication method
+          example: EMAIL, SMS
+        virtual_account:
+          $ref: '#/components/schemas/VirtualAccountDTO'
+          description: Customer virtual account
+
+    VirtualAccountDTO:
+      type: object
+      required:
+        - customer_id
+      properties:
+        id:
+          type: string
+          format: uuid
+        balance:
+          type: number
+          description: virtual account balance
+        customer_id:
+          type: string
+          format: uuid
+
+    PaymentMethodDTO:
+      type: string
+      enum:
+        - BANK_TRANSFER
+        - AUTO_DEDUCTION
+
+    CommunicationMethodDTO:
+      type: string
+      enum:
+        - EMAIL
+        - SMS
