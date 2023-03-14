@@ -135,3 +135,8 @@ The Accept offer API returns a created Loan Account, below is the sample respons
     "payment_method": "AUTO_DEDUCTION"
 }
 ```
+
+Once an offer has been accepted:
+ 
+* The customer virtual account will be credited
+* A Notification (Email/Sms) will be sent (currently logged)
